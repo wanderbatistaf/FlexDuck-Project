@@ -395,7 +395,7 @@ class App(ControllerModelPycFile):
                     )
                 )
 
-    #CONTINUAR EDITANDO DAQUI <POPUP DE CONFIRMAÇÃO>
+    #CONTINUAR EDITANDO DAQUI <POPUP DE CONFIRMAÇÃO!>
     def tb_salvar1_clicked_cb(self, widget, *args):
             dialog = DialogExample(self)
             response = dialog.run()
