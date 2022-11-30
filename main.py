@@ -13,6 +13,22 @@ builder.add_from_file("frm_start.glade")
 
 today = date.today()
 
+limite = 0
+
+class DialogExample(Gtk.Dialog):
+    def __init__(self, parent):
+        super().__init__(title="Warning!", flags=0)
+        self.add_buttons(
+            Gtk.STOCK_NO, Gtk.ResponseType.NO, Gtk.STOCK_YES, Gtk.ResponseType.YES
+        )
+        self.set_default_size(150,100)
+
+        label = Gtk.Label(label=f"Tem certeza que deseja excluir o cliente?")
+
+        box= self.get_content_area()
+        box.add(label)
+        self.show_all()
+
 class App(ControllerModelPycFile):
     def __init__(self, *args, **kwargs):
         super(App, self).__init__(*args, **kwargs)
@@ -27,7 +43,9 @@ class App(ControllerModelPycFile):
     def start_ui_clientes(self):
         self.gtk_edit = builder.get_object("gtk_edit")
         self.tb_excluir1 = builder.get_object("tb_excluir1")
-        # self.tb_proximo1 = builder.get_object("tb_proximo1")
+        self.tb_salvar1 = builder.get_object("tb_salvar1")
+        self.tb_proximo1 = builder.get_object("tb_proximo1")
+        self.tb_anterior1 = builder.get_object("tb_anterior1")
         self.check_pf1 = builder.get_object("check_pf1")
         self.txt_website = builder.get_object("txt_website")
         self.txt_instagram = builder.get_object("txt_instagram")
@@ -238,6 +256,24 @@ class App(ControllerModelPycFile):
                              (f"Não foi possivel localizar o cliente: {self.txt_localizar1.get_text()}."))
             self.on_gtk_clear()
 
+    #Botão de pesquisa ANTERIOR
+    def on_tb_anterior1_clicked(self, *args):
+        lb4 = self.txt_localizar1.get_text()
+        val = int(lb4)
+        if val <= limite:
+            val = limite + 1
+        lb4 = str(val - 1)
+        self.txt_localizar1.set_text(lb4)
+        self.tb_localizar1_clicked_cb()
+
+    #Botão de pesquisa PROXIMO
+    def on_tb_proximo1_clicked(self, *args):
+        lb4 = self.txt_localizar1.get_text()
+        val = int(lb4)
+        lb4 = str(val + 1)
+        self.txt_localizar1.set_text(lb4)
+        self.tb_localizar1_clicked_cb()
+
 
     #Habilida e Desabilita o Campo de Inativo desde
     def on_check_inativo1_toggled(self, *args):
@@ -358,6 +394,18 @@ class App(ControllerModelPycFile):
                     ex, "on_bt_user_add_clicked", args
                     )
                 )
+
+    #CONTINUAR EDITANDO DAQUI <POPUP DE CONFIRMAÇÃO>
+    def tb_salvar1_clicked_cb(self, widget, *args):
+            dialog = DialogExample(self)
+            response = dialog.run()
+
+            if response == Gtk.ResponseType.YES:
+                print("The OK button was clicked")
+            elif response == Gtk.ResponseType.NO:
+                print("The Cancel button was clicked")
+
+            dialog.destroy()
 
 
     #Localiza o CEP através da API e preenche

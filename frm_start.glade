@@ -255,6 +255,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
                                                 <property name="stock-id">gtk-save</property>
+                                                <signal name="clicked" handler="tb_salvar1_clicked_cb" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
