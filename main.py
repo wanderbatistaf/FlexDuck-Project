@@ -1,11 +1,14 @@
 import gi
 
 import model
+import report_clients
 from model import db
+import alert_dialogs
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from controller import ControllerModelPycFile
+from report_clients import ReportClients
 from datetime import date
 
 builder = Gtk.Builder()
@@ -15,21 +18,7 @@ today = date.today()
 
 limite = 0
 
-class DialogExample(Gtk.Dialog):
-    def __init__(self, parent):
-        super().__init__(title="Warning!", flags=0)
-        self.add_buttons(
-            Gtk.STOCK_NO, Gtk.ResponseType.NO, Gtk.STOCK_YES, Gtk.ResponseType.YES
-        )
-        self.set_default_size(150,100)
-
-        label = Gtk.Label(label=f"Tem certeza que deseja excluir o cliente?")
-
-        box= self.get_content_area()
-        box.add(label)
-        self.show_all()
-
-class App(ControllerModelPycFile):
+class App(ControllerModelPycFile, ReportClients):
     def __init__(self, *args, **kwargs):
         super(App, self).__init__(*args, **kwargs)
         self.start_ui_clientes()
@@ -41,6 +30,7 @@ class App(ControllerModelPycFile):
 
 
     def start_ui_clientes(self):
+        self.tb_imprimir1 = builder.get_object("tb_imprimir1")
         self.gtk_edit = builder.get_object("gtk_edit")
         self.tb_excluir1 = builder.get_object("tb_excluir1")
         self.tb_salvar1 = builder.get_object("tb_salvar1")
@@ -126,70 +116,80 @@ class App(ControllerModelPycFile):
         self.txt_instagram.set_text("")
         self.txt_website.set_text("")
         self.txt_localizar1.set_text("")
+        self.cadastrado_em()
+
         self.check_pf1.set_active(False)
-        self.txt_nome1.set_editable(True)
-        self.txt_razao1.set_editable(True)
-        self.txt_cnpj_cpf1.set_editable(True)
-        self.txt_ie1.set_editable(True)
-        self.txt_im1.set_editable(True)
-        self.txt_tel_cel.set_editable(True)
-        self.txt_tel_fixo.set_editable(True)
-        self.txt_tel_recado.set_editable(True)
-        self.txt_email.set_editable(True)
-        self.txt_dtcadastro1.set_editable(True)
-        self.txt_inativodesde1.set_editable(True)
-        self.txt_dtbloqueado1.set_editable(True)
-        self.txt_cep1.set_editable(True)
-        self.txt_logradouro1.set_editable(True)
-        self.txt_bairro1.set_editable(True)
-        self.txt_cidade1.set_editable(True)
-        self.cmb_uf1.set_editable(True)
-        self.txt_tel_fixo.set_editable(True)
-        self.txt_tel_cel.set_editable(True)
-        self.txt_tel_recado.set_editable(True)
-        self.txt_instagram.set_editable(True)
-        self.txt_website.set_editable(True)
+        self.check_pf1.set_sensitive(True)
+        self.txt_nome1.set_can_focus(True)
+        self.txt_razao1.set_can_focus(True)
+        self.txt_cnpj_cpf1.set_can_focus(True)
+        self.txt_ie1.set_can_focus(True)
+        self.txt_im1.set_can_focus(True)
+        self.txt_tel_cel.set_can_focus(True)
+        self.txt_tel_fixo.set_can_focus(True)
+        self.txt_tel_recado.set_can_focus(True)
+        self.txt_email.set_can_focus(True)
+        self.txt_dtcadastro1.set_can_focus(True)
+        self.txt_inativodesde1.set_can_focus(True)
+        self.txt_dtbloqueado1.set_can_focus(True)
+        self.txt_cep1.set_can_focus(True)
+        self.txt_logradouro1.set_can_focus(True)
+        self.txt_bairro1.set_can_focus(True)
+        self.txt_cidade1.set_can_focus(True)
+        self.cmb_uf1.set_can_focus(True)
+        self.txt_tel_fixo.set_can_focus(True)
+        self.txt_tel_cel.set_can_focus(True)
+        self.txt_tel_recado.set_can_focus(True)
+        self.txt_instagram.set_can_focus(True)
+        self.txt_website.set_can_focus(True)
 
     #Botão Adicionar Cliente
     def on_bt_user_add_clicked(self, *args):
         try:
-            nome = self.txt_nome1.get_text()
-            razaosocial = self.txt_razao1.get_text()
-            cnpjcpf = self.txt_cnpj_cpf1.get_text()
-            ie = self.txt_ie1.get_text()
-            im = self.txt_im1.get_text()
-            celular = self.txt_tel_cel.get_text()
-            fixo = self.txt_tel_fixo.get_text()
-            recado = self.txt_tel_recado.get_text()
-            email = self.txt_email.get_text()
-            created_at = self.txt_dtcadastro1.get_text()
-            inactive_since = self.txt_inativodesde1.get_text()
-            blocked_since = self.txt_dtbloqueado1.get_text()
-            cep = self.txt_cep1.get_text()
-            street = self.txt_logradouro1.get_text()
-            district = self.txt_bairro1.get_text()
-            city = self.txt_cidade1.get_text()
-            state = self.cmb_uf1.get_text()
-            telephone = self.txt_tel_fixo.get_text()
-            cellphone = self.txt_tel_cel.get_text()
-            errands = self.txt_tel_recado.get_text()
-            instagram = self.txt_instagram.get_text()
-            website = self.txt_website.get_text()
-            natural_person = self.check_pf1.get_active()
-            self.insert_user(nome, razaosocial, cnpjcpf, ie, im,
-                             celular, fixo, recado, email, created_at,
-                             inactive_since, blocked_since, cep, street,
-                             district, city, state, telephone, cellphone,
-                             errands, instagram, website, natural_person)
-            print(f"O Usuário {nome} foi adicionado com sucesso.")
-            print(f"{nome}, {razaosocial}, {cnpjcpf}, {ie}, {im},{celular}, "
-                  f"{fixo}, {recado}, {email}, {created_at},{inactive_since}, "
-                  f"{blocked_since}, {cep}, {street}, {district}, {city}, {state}, "
-                  f"{telephone}, {cellphone}, {errands}, {instagram}, {website}, "
-                  f"{natural_person}")
-            self.show_dialog(self.dialog_window, "Sucess!",
-                             (f"O Usuário {nome} foi adicionado com sucesso."))
-            self.on_gtk_clear()
+            dialog = alert_dialogs.AlertAdicionar(self)
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                nome = self.txt_nome1.get_text()
+                razaosocial = self.txt_razao1.get_text()
+                cnpjcpf = self.txt_cnpj_cpf1.get_text()
+                ie = self.txt_ie1.get_text()
+                im = self.txt_im1.get_text()
+                celular = self.txt_tel_cel.get_text()
+                fixo = self.txt_tel_fixo.get_text()
+                recado = self.txt_tel_recado.get_text()
+                email = self.txt_email.get_text()
+                created_at = self.txt_dtcadastro1.get_text()
+                inactive_since = self.txt_inativodesde1.get_text()
+                blocked_since = self.txt_dtbloqueado1.get_text()
+                cep = self.txt_cep1.get_text()
+                street = self.txt_logradouro1.get_text()
+                district = self.txt_bairro1.get_text()
+                city = self.txt_cidade1.get_text()
+                state = self.cmb_uf1.get_text()
+                telephone = self.txt_tel_fixo.get_text()
+                cellphone = self.txt_tel_cel.get_text()
+                errands = self.txt_tel_recado.get_text()
+                instagram = self.txt_instagram.get_text()
+                website = self.txt_website.get_text()
+                natural_person = self.check_pf1.get_active()
+                self.insert_user(nome, razaosocial, cnpjcpf, ie, im,
+                                 celular, fixo, recado, email, created_at,
+                                 inactive_since, blocked_since, cep, street,
+                                 district, city, state, telephone, cellphone,
+                                 errands, instagram, website, natural_person)
+                print(f"O Usuário {nome} foi adicionado com sucesso.")
+                print(f"{nome}, {razaosocial}, {cnpjcpf}, {ie}, {im},{celular}, "
+                      f"{fixo}, {recado}, {email}, {created_at},{inactive_since}, "
+                      f"{blocked_since}, {cep}, {street}, {district}, {city}, {state}, "
+                      f"{telephone}, {cellphone}, {errands}, {instagram}, {website}, "
+                      f"{natural_person}")
+                self.show_dialog(self.dialog_window, "Sucess!",
+                                 (f"O Usuário {nome} foi adicionado com sucesso."))
+                self.on_gtk_clear()
+            elif response == Gtk.ResponseType.NO:
+                pass
+                print("The cancel button was clicked")
+            dialog.destroy()
         except Exception as ex:
             print("Error: %s \nSignal: %s \nArgs: %s" % (
                 ex, "on_bt_user_add_clicked", args
@@ -259,6 +259,8 @@ class App(ControllerModelPycFile):
     #Botão de pesquisa ANTERIOR
     def on_tb_anterior1_clicked(self, *args):
         lb4 = self.txt_localizar1.get_text()
+        if lb4 != int():
+            lb4 = self.txt_codigo1.get_text()
         val = int(lb4)
         if val <= limite:
             val = limite + 1
@@ -269,6 +271,8 @@ class App(ControllerModelPycFile):
     #Botão de pesquisa PROXIMO
     def on_tb_proximo1_clicked(self, *args):
         lb4 = self.txt_localizar1.get_text()
+        if lb4 == "" or lb4 != int():
+            lb4 = self.txt_codigo1.get_text()
         val = int(lb4)
         lb4 = str(val + 1)
         self.txt_localizar1.set_text(lb4)
@@ -292,19 +296,29 @@ class App(ControllerModelPycFile):
     #Botão de Exclusão de Clientes
     def on_tb_excluir1_clicked(self, *args):
         try:
-            idcliente = self.txt_codigo1.get_text()
-            if idcliente != "":
-                deleted_user = self.delete_user(idcliente)
-                nome = self.txt_nome1.get_text()
-                print(nome)
-                print(deleted_user)
-                self.show_dialog(self.dialog_window, "Sucess!",
-                (f"O Usuário {nome} foi excluído com sucesso."))
-                self.on_gtk_clear()
-            else:
-                self.show_dialog(self.dialog_window, "Error!",
-                                 (f"Não foi possivel excluir o cliente: {self.txt_nome1.get_text()}."))
-                self.on_gtk_clear()
+            dialog = alert_dialogs.AlertExcluir(self)
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                # O que acontece se clicar no SIM
+                idcliente = self.txt_codigo1.get_text()
+                if idcliente != "":
+                    deleted_user = self.delete_user(idcliente)
+                    nome = self.txt_nome1.get_text()
+                    print(nome)
+                    print(deleted_user)
+                    self.show_dialog(self.dialog_window, "Sucess!",
+                                     (f"O Usuário {nome} foi excluído com sucesso."))
+                    self.on_gtk_clear()
+                else:
+                    self.show_dialog(self.dialog_window, "Error!",
+                                     (f"Não foi possivel excluir o cliente: {self.txt_nome1.get_text()}."))
+                    self.on_gtk_clear()
+                print("The YES button was clicked")
+                # O que acontece se clicar no NÃO
+            elif response == Gtk.ResponseType.NO:
+                pass
+                print("The Cancel button was clicked")
+            dialog.destroy()
         except Exception as ex:
             self.show_dialog(self.dialog_window, "Error!",
                      (f"Não foi possivel excluir o cliente: {self.txt_nome1.get_text()}."))
@@ -401,7 +415,9 @@ class App(ControllerModelPycFile):
             response = dialog.run()
 
             if response == Gtk.ResponseType.YES:
+                #O que acontece se clicar no SIM
                 print("The OK button was clicked")
+                # O que acontece se clicar no NÃO
             elif response == Gtk.ResponseType.NO:
                 print("The Cancel button was clicked")
 
@@ -416,6 +432,29 @@ class App(ControllerModelPycFile):
         self.txt_bairro1.set_text(consult_cep[1])
         self.txt_cidade1.set_text(consult_cep[2])
         self.cmb_uf1.set_text(consult_cep[3])
+
+
+    #Imprimir Relatório <--CONTINUAR DAQUI-->
+    def tb_imprimir1_clicked_cb(self, *args):
+        try:
+            dialog = alert_dialogs.AlertImprimirRelatorio(self)
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                #O que acontece se clicar em SIM
+                print("The yes button was clicked")
+                filename = "myData_{}.csv"
+                idcliente = self.txt_codigo1.get_text()
+                self.getidreport(idcliente, filename)
+            elif response == Gtk.ResponseType.NO:
+                pass
+                print("The cancel button was clicked")
+
+            dialog.destroy()
+        except Exception as ex:
+                print("Error: %s \nSignal: %s \nArgs: %s" % (
+                    ex, "tb_imprimir1_clicked_cb", args
+                    )
+                )
 
 
     # Show Message Dialog
