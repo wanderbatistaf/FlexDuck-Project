@@ -251,18 +251,6 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkToolButton" id="tb_salvar1">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="stock-id">gtk-save</property>
-                                                <signal name="clicked" handler="tb_salvar1_clicked_cb" swapped="no"/>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="homogeneous">True</property>
-                                              </packing>
-                                            </child>
-                                            <child>
                                               <object class="GtkToolButton" id="tb_excluir1">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
@@ -850,7 +838,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">False</property>
-                                                            <property name="margin-left">9</property>
+                                                            <property name="margin-left">11</property>
                                                             <property name="use-underline">True</property>
                                                             <property name="draw-indicator">True</property>
                                                             <signal name="toggled" handler="on_check_inativo1_toggled" swapped="no"/>
@@ -952,8 +940,8 @@
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">False</property>
-                                                            <property name="margin-left">11</property>
-                                                            <property name="margin-right">8</property>
+                                                            <property name="margin-left">10</property>
+                                                            <property name="margin-right">10</property>
                                                             <property name="use-underline">True</property>
                                                             <property name="draw-indicator">True</property>
                                                             <signal name="toggled" handler="on_check_bloqueado1_toggled" swapped="no"/>
@@ -1723,12 +1711,12 @@
                                             <property name="left-padding">3</property>
                                             <property name="right-padding">3</property>
                                             <child>
-                                              <object class="GtkToolbar" id="toolbar2">
+                                              <object class="GtkToolbar" id="toolbar1">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
                                                 <property name="toolbar-style">icons</property>
                                                 <child>
-                                                  <object class="GtkToolButton" id="tb_novo">
+                                                  <object class="GtkToolButton" id="tb_novo2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <property name="stock-id">gtk-new</property>
@@ -1739,10 +1727,12 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkToolButton" id="tb_salvar">
+                                                  <object class="GtkToggleToolButton" id="gtk_edit1">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-save</property>
+                                                    <property name="label" translatable="yes">toolbutton</property>
+                                                    <property name="use-underline">True</property>
+                                                    <property name="stock-id">gtk-edit</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -1750,10 +1740,63 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkToolButton" id="tb_excluir">
+                                                  <object class="GtkToolButton" id="tb_excluir2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
+                                                    <property name="label" translatable="yes">gtk-delete</property>
+                                                    <property name="use-underline">True</property>
                                                     <property name="stock-id">gtk-delete</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="homogeneous">True</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkSeparatorToolItem" id="separatortoolitem1">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="homogeneous">False</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkToolItem" id="toolitem1">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <child>
+                                                      <object class="GtkEntry" id="txt_localizar2">
+                                                        <property name="visible">True</property>
+                                                        <property name="can-focus">True</property>
+                                                        <property name="primary-icon-activatable">False</property>
+                                                        <property name="secondary-icon-activatable">False</property>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="homogeneous">False</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkToolButton" id="tb_localizar2">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="stock-id">gtk-find</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="homogeneous">True</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkToolButton" id="gtk_clear1">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="tooltip-text" translatable="yes">Limpar</property>
+                                                    <property name="stock-id">gtk-clear</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -1771,28 +1814,21 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkToolItem" id="toolitem1">
+                                                  <object class="GtkToolButton" id="tb_anterior2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
-                                                    <child>
-                                                      <object class="GtkEntry" id="txt_localizar">
-                                                        <property name="visible">True</property>
-                                                        <property name="can-focus">True</property>
-                                                        <property name="primary-icon-activatable">False</property>
-                                                        <property name="secondary-icon-activatable">False</property>
-                                                      </object>
-                                                    </child>
+                                                    <property name="stock-id">gtk-goto-first</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
-                                                    <property name="homogeneous">False</property>
+                                                    <property name="homogeneous">True</property>
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkToolButton" id="tb_localizar">
+                                                  <object class="GtkToolButton" id="tb_proximo2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-find</property>
+                                                    <property name="stock-id">gtk-goto-last</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -1810,61 +1846,7 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkToolButton" id="tb_primeiro">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-goto-first</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="homogeneous">True</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkToolButton" id="tb_anterior">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-go-up</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="homogeneous">True</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkToolButton" id="tb_proximo">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-go-down</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="homogeneous">True</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkToolButton" id="tb_ultimo">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="stock-id">gtk-goto-last</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="homogeneous">True</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkSeparatorToolItem" id="separatortoolitem5">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="homogeneous">False</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkToolButton" id="tb_imprimir">
+                                                  <object class="GtkToolButton" id="tb_imprimir2">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                     <property name="stock-id">gtk-print</property>
@@ -1875,7 +1857,7 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkSeparatorToolItem" id="separatortoolitem6">
+                                                  <object class="GtkSeparatorToolItem" id="separatortoolitem4">
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">False</property>
                                                   </object>
@@ -1890,7 +1872,6 @@
                                                     <property name="can-focus">False</property>
                                                     <property name="receives-default">True</property>
                                                     <property name="stock-id">gtk-quit</property>
-                                                    <signal name="clicked" handler="on_tb_sair_clicked1" swapped="no"/>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">False</property>
@@ -1934,49 +1915,40 @@
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
                                                             <child>
-                                                            <object class="GtkHBox" id="hbox12">
-                                                            <property name="visible">True</property>
-                                                            <property name="can-focus">False</property>
-                                                            <child>
-                                                            <object class="GtkFixed" id="fixed1">
+                                                            <object class="GtkVBox" id="vbox20">
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
                                                             <child>
                                                             <object class="GtkLabel" id="label1">
-                                                            <property name="width-request">96</property>
-                                                            <property name="height-request">16</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
                                                             <property name="label" translatable="yes">Código:</property>
                                                             <property name="xalign">0</property>
                                                             </object>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkLabel" id="gtk_codigo">
-                                                            <property name="width-request">158</property>
-                                                            <property name="height-request">35</property>
-                                                            <property name="visible">True</property>
-                                                            <property name="can-focus">False</property>
-                                                            <property name="selectable">True</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="y">16</property>
-                                                            </packing>
-                                                            </child>
-                                                            </object>
                                                             <packing>
                                                             <property name="expand">False</property>
-                                                            <property name="fill">True</property>
+                                                            <property name="fill">False</property>
                                                             <property name="position">0</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkAlignment" id="alignment24">
+                                                            <object class="GtkFixed" id="fixed1">
+                                                            <property name="height-request">32</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">False</property>
-                                                            <property name="left-padding">15</property>
                                                             <child>
-                                                            <placeholder/>
+                                                            <object class="GtkEntry" id="txt_codigo2">
+                                                            <property name="width-request">158</property>
+                                                            <property name="height-request">21</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="sensitive">False</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="double-buffered">False</property>
+                                                            <property name="editable">False</property>
+                                                            <property name="caps-lock-warning">False</property>
+                                                            <property name="primary-icon-activatable">False</property>
+                                                            <property name="secondary-icon-activatable">False</property>
+                                                            </object>
                                                             </child>
                                                             </object>
                                                             <packing>

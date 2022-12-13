@@ -1,10 +1,11 @@
 import csv
 import time
 import model
+import os
+import platform
 
 
 __all__ = ["ReportClients"]
-
 
 class ReportClients(object):
     def __init__(self, *args):
@@ -12,22 +13,25 @@ class ReportClients(object):
 
 
     def getidreport(self, idcliente, filename):
+        save_path = "./Reports/"
         mydata = model.Usuarios.select().where(model.Usuarios.idcliente == idcliente).tuples()
         print("Writing to csv: {} ...".format(filename))
-        print(mydata)
-        csvOut = csv.writer(out)
-        headers = [x for x in model.Usuarios._meta.sorted_field_names]
-        csvOut.writerow(headers)
-        for row in mydata:
-            csvOut.writerow(row)
-            print(row)
-
-    def writeToCsv(data, filename):
-        print("Writing to csv: {} ...".format(filename))
-        with open(filename, 'w', newline='') as out:
+        completeName = os.path.join(save_path, filename)
+        with open(completeName.format(time.time_ns()), 'w', newline='') as out:
+            print(mydata)
             csvOut = csv.writer(out)
             headers = [x for x in model.Usuarios._meta.sorted_field_names]
             csvOut.writerow(headers)
-            for row in data:
+            for row in mydata:
                 csvOut.writerow(row)
-                data.writeToCsv(mydata, f"{filename}".format(time.time_ns()))
+                print(row)
+                out.close()
+                if platform.system() == "Windows":
+                    os.startfile(save_path)
+                elif platform.system() == "Darwing":
+                    import subprocess
+                    subprocess.call(["open", "-R", save_path])
+                else:
+                    import subprocess
+                    subprocess.Popen(["xdg-open", save_path])
+

@@ -33,7 +33,6 @@ class App(ControllerModelPycFile, ReportClients):
         self.tb_imprimir1 = builder.get_object("tb_imprimir1")
         self.gtk_edit = builder.get_object("gtk_edit")
         self.tb_excluir1 = builder.get_object("tb_excluir1")
-        self.tb_salvar1 = builder.get_object("tb_salvar1")
         self.tb_proximo1 = builder.get_object("tb_proximo1")
         self.tb_anterior1 = builder.get_object("tb_anterior1")
         self.check_pf1 = builder.get_object("check_pf1")
@@ -149,6 +148,7 @@ class App(ControllerModelPycFile, ReportClients):
             dialog = alert_dialogs.AlertAdicionar(self)
             response = dialog.run()
             if response == Gtk.ResponseType.YES:
+                dialog.destroy()
                 nome = self.txt_nome1.get_text()
                 razaosocial = self.txt_razao1.get_text()
                 cnpjcpf = self.txt_cnpj_cpf1.get_text()
@@ -259,8 +259,11 @@ class App(ControllerModelPycFile, ReportClients):
     #Botão de pesquisa ANTERIOR
     def on_tb_anterior1_clicked(self, *args):
         lb4 = self.txt_localizar1.get_text()
-        if lb4 != int():
-            lb4 = self.txt_codigo1.get_text()
+        if lb4 == "":
+            lb4 = 2
+        else:
+            if lb4 != int():
+                lb4 = self.txt_codigo1.get_text()
         val = int(lb4)
         if val <= limite:
             val = limite + 1
@@ -271,8 +274,11 @@ class App(ControllerModelPycFile, ReportClients):
     #Botão de pesquisa PROXIMO
     def on_tb_proximo1_clicked(self, *args):
         lb4 = self.txt_localizar1.get_text()
-        if lb4 == "" or lb4 != int():
-            lb4 = self.txt_codigo1.get_text()
+        if lb4 == "":
+            lb4 = 1
+        else:
+            if lb4 == "" or lb4 != int():
+                lb4 = self.txt_codigo1.get_text()
         val = int(lb4)
         lb4 = str(val + 1)
         self.txt_localizar1.set_text(lb4)
@@ -300,6 +306,7 @@ class App(ControllerModelPycFile, ReportClients):
             response = dialog.run()
             if response == Gtk.ResponseType.YES:
                 # O que acontece se clicar no SIM
+                dialog.destroy()
                 idcliente = self.txt_codigo1.get_text()
                 if idcliente != "":
                     deleted_user = self.delete_user(idcliente)
@@ -324,104 +331,104 @@ class App(ControllerModelPycFile, ReportClients):
                      (f"Não foi possivel excluir o cliente: {self.txt_nome1.get_text()}."))
             self.on_gtk_clear()
 
+    #Botão de Editar cliente. <--ESTÁ APARECENDO 2X AO CLICAR EM NÃO-->
     def gtk_edit_toggled_cb(self, *args):
         cliente_id = self.txt_codigo1.get_text()
         print(cliente_id)
         try:
+            dialog = alert_dialogs.AlertEditUserStart(self)
+            response = dialog.run()
+            if response == Gtk.ResponseType.YES:
+                dialog.destroy()
+                print("Button YES was clicked")
             #Checa se o id do cliente é diferente de vazio
-            if cliente_id != "":
-                if self.gtk_edit.get_active():
-                    # Liberando Alteração do User Após Pesquisa
-                    self.txt_codigo1.set_editable(False)
-                    self.txt_nome1.set_can_focus(True)
-                    self.txt_razao1.set_can_focus(True)
-                    self.txt_cnpj_cpf1.set_can_focus(True)
-                    self.txt_ie1.set_can_focus(True)
-                    self.txt_im1.set_can_focus(True)
-                    self.txt_tel_cel.set_can_focus(True)
-                    self.txt_tel_fixo.set_can_focus(True)
-                    self.txt_tel_recado.set_can_focus(True)
-                    self.txt_email.set_can_focus(True)
-                    self.txt_dtcadastro1.set_can_focus(True)
-                    self.txt_inativodesde1.set_can_focus(True)
-                    self.txt_dtbloqueado1.set_can_focus(True)
-                    self.txt_cep1.set_can_focus(True)
-                    self.txt_logradouro1.set_can_focus(True)
-                    self.txt_bairro1.set_can_focus(True)
-                    self.txt_cidade1.set_can_focus(True)
-                    self.cmb_uf1.set_can_focus(True)
-                    self.txt_tel_fixo.set_can_focus(True)
-                    self.txt_tel_cel.set_can_focus(True)
-                    self.txt_tel_recado.set_can_focus(True)
-                    self.txt_instagram.set_can_focus(True)
-                    self.txt_website.set_can_focus(True)
-                    self.check_pf1.set_sensitive(True)
-                    state = "on"
+                if cliente_id != "":
+                    if self.gtk_edit.get_active():
+                        dialog.destroy()
+                        # Liberando Alteração do User Após Pesquisa
+                        self.txt_codigo1.set_editable(False)
+                        self.txt_nome1.set_can_focus(True)
+                        self.txt_razao1.set_can_focus(True)
+                        self.txt_cnpj_cpf1.set_can_focus(True)
+                        self.txt_ie1.set_can_focus(True)
+                        self.txt_im1.set_can_focus(True)
+                        self.txt_tel_cel.set_can_focus(True)
+                        self.txt_tel_fixo.set_can_focus(True)
+                        self.txt_tel_recado.set_can_focus(True)
+                        self.txt_email.set_can_focus(True)
+                        self.txt_dtcadastro1.set_can_focus(True)
+                        self.txt_inativodesde1.set_can_focus(True)
+                        self.txt_dtbloqueado1.set_can_focus(True)
+                        self.txt_cep1.set_can_focus(True)
+                        self.txt_logradouro1.set_can_focus(True)
+                        self.txt_bairro1.set_can_focus(True)
+                        self.txt_cidade1.set_can_focus(True)
+                        self.cmb_uf1.set_can_focus(True)
+                        self.txt_tel_fixo.set_can_focus(True)
+                        self.txt_tel_cel.set_can_focus(True)
+                        self.txt_tel_recado.set_can_focus(True)
+                        self.txt_instagram.set_can_focus(True)
+                        self.txt_website.set_can_focus(True)
+                        self.check_pf1.set_sensitive(True)
+                        state = "on"
+                        dialog.destroy()
+                    else:
+                        dialog.destroy()
+                        new_idcliente = self.txt_codigo1.get_text()
+                        new_nome = self.txt_nome1.get_text()
+                        new_razaosocial = self.txt_razao1.get_text()
+                        new_cnpjcpf = self.txt_cnpj_cpf1.get_text()
+                        new_ie = self.txt_ie1.get_text()
+                        new_im = self.txt_im1.get_text()
+                        new_celular = self.txt_tel_cel.get_text()
+                        new_fixo = self.txt_tel_fixo.get_text()
+                        new_recado = self.txt_tel_recado.get_text()
+                        new_email = self.txt_email.get_text()
+                        new_created_at = self.txt_dtcadastro1.get_text()
+                        new_inactive_since = self.txt_inativodesde1.get_text()
+                        new_blocked_since = self.txt_dtbloqueado1.get_text()
+                        new_cep = self.txt_cep1.get_text()
+                        new_street = self.txt_logradouro1.get_text()
+                        new_district = self.txt_bairro1.get_text()
+                        new_city = self.txt_cidade1.get_text()
+                        new_state = self.cmb_uf1.get_text()
+                        new_telephone = self.txt_tel_fixo.get_text()
+                        new_cellphone = self.txt_tel_cel.get_text()
+                        new_errands = self.txt_tel_recado.get_text()
+                        new_instagram = self.txt_instagram.get_text()
+                        new_website = self.txt_website.get_text()
+                        new_natural_person = self.check_pf1.get_active()
+                        self.update_user(new_idcliente, new_nome, new_razaosocial, new_cnpjcpf, new_ie, new_im,
+                                         new_celular, new_fixo, new_recado, new_email, new_created_at,
+                                         new_inactive_since, new_blocked_since, new_cep, new_street,
+                                         new_district, new_city, new_state, new_telephone, new_cellphone,
+                                         new_errands, new_instagram, new_website, new_natural_person)
+                        dialog.destroy()
+                        print(f"O Usuário {new_nome} foi alterado com sucesso.")
+                        print(
+                            f"{new_nome}, {new_razaosocial}, {new_cnpjcpf}, {new_ie}, {new_im},{new_celular}, {new_fixo}, "
+                            f"{new_recado}, {new_email}, {new_created_at},{new_inactive_since}, {new_blocked_since}, {new_cep}, "
+                            f"{new_street}, {new_district}, {new_city}, {new_state}, {new_telephone}, {new_cellphone}, {new_errands},"
+                            f" {new_instagram}, {new_website}, {new_natural_person}")
+                        self.show_dialog(self.dialog_window, "Sucess!",
+                                         (f"O Usuário {new_nome} foi alterado com sucesso."))
+                        self.on_gtk_clear()
+                        state = "off"
+                        print("Button", "was turned", state)
                 else:
-                    new_idcliente = self.txt_codigo1.get_text()
-                    new_nome = self.txt_nome1.get_text()
-                    new_razaosocial = self.txt_razao1.get_text()
-                    new_cnpjcpf = self.txt_cnpj_cpf1.get_text()
-                    new_ie = self.txt_ie1.get_text()
-                    new_im = self.txt_im1.get_text()
-                    new_celular = self.txt_tel_cel.get_text()
-                    new_fixo = self.txt_tel_fixo.get_text()
-                    new_recado = self.txt_tel_recado.get_text()
-                    new_email = self.txt_email.get_text()
-                    new_created_at = self.txt_dtcadastro1.get_text()
-                    new_inactive_since = self.txt_inativodesde1.get_text()
-                    new_blocked_since = self.txt_dtbloqueado1.get_text()
-                    new_cep = self.txt_cep1.get_text()
-                    new_street = self.txt_logradouro1.get_text()
-                    new_district = self.txt_bairro1.get_text()
-                    new_city = self.txt_cidade1.get_text()
-                    new_state = self.cmb_uf1.get_text()
-                    new_telephone = self.txt_tel_fixo.get_text()
-                    new_cellphone = self.txt_tel_cel.get_text()
-                    new_errands = self.txt_tel_recado.get_text()
-                    new_instagram = self.txt_instagram.get_text()
-                    new_website = self.txt_website.get_text()
-                    new_natural_person = self.check_pf1.get_active()
-                    self.update_user(new_idcliente, new_nome, new_razaosocial, new_cnpjcpf, new_ie, new_im,
-                                new_celular, new_fixo, new_recado, new_email, new_created_at,
-                                new_inactive_since, new_blocked_since, new_cep, new_street,
-                                new_district, new_city, new_state, new_telephone, new_cellphone,
-                                new_errands, new_instagram, new_website, new_natural_person)
-                    print(f"O Usuário {new_nome} foi alterado com sucesso.")
-                    print(
-                        f"{new_nome}, {new_razaosocial}, {new_cnpjcpf}, {new_ie}, {new_im},{new_celular}, {new_fixo}, "
-                        f"{new_recado}, {new_email}, {new_created_at},{new_inactive_since}, {new_blocked_since}, {new_cep}, "
-                        f"{new_street}, {new_district}, {new_city}, {new_state}, {new_telephone}, {new_cellphone}, {new_errands},"
-                        f" {new_instagram}, {new_website}, {new_natural_person}")
-                    self.show_dialog(self.dialog_window, "Sucess!",
-                                    (f"O Usuário {new_nome} foi alterado com sucesso."))
-                    self.on_gtk_clear()
-                    state = "off"
-                print("Button", "was turned", state)
-            else:
-                self.gtk_edit.set_active(False)
-                self.show_dialog(self.dialog_window, "Error!",
+                    self.gtk_edit.set_active(False)
+                    self.show_dialog(self.dialog_window, "Error!",
                     (f"Não foi possivel alterar o cliente: {self.txt_nome1.get_text()}."))
-                self.on_gtk_clear()
+                    self.on_gtk_clear()
+            elif response == Gtk.ResponseType.NO:
+                print("Button NO was clicked")
+                dialog.destroy()
+                self.gtk_edit.set_active(False)
         except Exception as ex:
                 print("Error: %s \nSignal: %s \nArgs: %s" % (
                     ex, "on_bt_user_add_clicked", args
                     )
                 )
-
-    #CONTINUAR EDITANDO DAQUI <POPUP DE CONFIRMAÇÃO!>
-    def tb_salvar1_clicked_cb(self, widget, *args):
-            dialog = DialogExample(self)
-            response = dialog.run()
-
-            if response == Gtk.ResponseType.YES:
-                #O que acontece se clicar no SIM
-                print("The OK button was clicked")
-                # O que acontece se clicar no NÃO
-            elif response == Gtk.ResponseType.NO:
-                print("The Cancel button was clicked")
-
-            dialog.destroy()
 
 
     #Localiza o CEP através da API e preenche
@@ -442,11 +449,12 @@ class App(ControllerModelPycFile, ReportClients):
             if response == Gtk.ResponseType.YES:
                 #O que acontece se clicar em SIM
                 print("The yes button was clicked")
-                filename = "myData_{}.csv"
+                filename = "ClientReport_{}.csv"
                 idcliente = self.txt_codigo1.get_text()
                 self.getidreport(idcliente, filename)
+                dialog.destroy()
             elif response == Gtk.ResponseType.NO:
-                pass
+                dialog.destroy()
                 print("The cancel button was clicked")
 
             dialog.destroy()
