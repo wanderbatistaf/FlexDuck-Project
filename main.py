@@ -148,44 +148,58 @@ class App(ControllerModelPycFile, ReportClients):
             dialog = alert_dialogs.AlertAdicionar(self)
             response = dialog.run()
             if response == Gtk.ResponseType.YES:
-                dialog.destroy()
                 nome = self.txt_nome1.get_text()
-                razaosocial = self.txt_razao1.get_text()
-                cnpjcpf = self.txt_cnpj_cpf1.get_text()
-                ie = self.txt_ie1.get_text()
-                im = self.txt_im1.get_text()
                 celular = self.txt_tel_cel.get_text()
                 fixo = self.txt_tel_fixo.get_text()
-                recado = self.txt_tel_recado.get_text()
-                email = self.txt_email.get_text()
-                created_at = self.txt_dtcadastro1.get_text()
-                inactive_since = self.txt_inativodesde1.get_text()
-                blocked_since = self.txt_dtbloqueado1.get_text()
-                cep = self.txt_cep1.get_text()
-                street = self.txt_logradouro1.get_text()
-                district = self.txt_bairro1.get_text()
-                city = self.txt_cidade1.get_text()
-                state = self.cmb_uf1.get_text()
-                telephone = self.txt_tel_fixo.get_text()
-                cellphone = self.txt_tel_cel.get_text()
-                errands = self.txt_tel_recado.get_text()
-                instagram = self.txt_instagram.get_text()
-                website = self.txt_website.get_text()
-                natural_person = self.check_pf1.get_active()
-                self.insert_user(nome, razaosocial, cnpjcpf, ie, im,
-                                 celular, fixo, recado, email, created_at,
-                                 inactive_since, blocked_since, cep, street,
-                                 district, city, state, telephone, cellphone,
-                                 errands, instagram, website, natural_person)
-                print(f"O Usuário {nome} foi adicionado com sucesso.")
-                print(f"{nome}, {razaosocial}, {cnpjcpf}, {ie}, {im},{celular}, "
-                      f"{fixo}, {recado}, {email}, {created_at},{inactive_since}, "
-                      f"{blocked_since}, {cep}, {street}, {district}, {city}, {state}, "
-                      f"{telephone}, {cellphone}, {errands}, {instagram}, {website}, "
-                      f"{natural_person}")
-                self.show_dialog(self.dialog_window, "Sucess!",
-                                 (f"O Usuário {nome} foi adicionado com sucesso."))
-                self.on_gtk_clear()
+                if nome != "" and celular != "" or fixo !="":
+                    dialog.destroy()
+                    nome = self.txt_nome1.get_text()
+                    razaosocial = self.txt_razao1.get_text()
+                    cnpjcpf = self.txt_cnpj_cpf1.get_text()
+                    ie = self.txt_ie1.get_text()
+                    im = self.txt_im1.get_text()
+                    celular = self.txt_tel_cel.get_text()
+                    fixo = self.txt_tel_fixo.get_text()
+                    recado = self.txt_tel_recado.get_text()
+                    email = self.txt_email.get_text()
+                    created_at = self.txt_dtcadastro1.get_text()
+                    inactive_since = self.txt_inativodesde1.get_text()
+                    blocked_since = self.txt_dtbloqueado1.get_text()
+                    cep = self.txt_cep1.get_text()
+                    street = self.txt_logradouro1.get_text()
+                    district = self.txt_bairro1.get_text()
+                    city = self.txt_cidade1.get_text()
+                    state = self.cmb_uf1.get_text()
+                    telephone = self.txt_tel_fixo.get_text()
+                    cellphone = self.txt_tel_cel.get_text()
+                    errands = self.txt_tel_recado.get_text()
+                    instagram = self.txt_instagram.get_text()
+                    website = self.txt_website.get_text()
+                    natural_person = self.check_pf1.get_active()
+                    self.insert_user(nome, razaosocial, cnpjcpf, ie, im,
+                                     celular, fixo, recado, email, created_at,
+                                     inactive_since, blocked_since, cep, street,
+                                     district, city, state, telephone, cellphone,
+                                     errands, instagram, website, natural_person)
+                    print(f"O Cliente {nome} foi adicionado com sucesso.")
+                    print(f"{nome}, {razaosocial}, {cnpjcpf}, {ie}, {im},{celular}, "
+                          f"{fixo}, {recado}, {email}, {created_at},{inactive_since}, "
+                          f"{blocked_since}, {cep}, {street}, {district}, {city}, {state}, "
+                          f"{telephone}, {cellphone}, {errands}, {instagram}, {website}, "
+                          f"{natural_person}")
+                    self.show_dialog(self.dialog_window, "Sucess!",
+                                     (f"O Cliente {nome} foi adicionado com sucesso."))
+                    self.on_gtk_clear()
+                else:
+                    if nome == "":
+                        self.show_dialog(self.dialog_window, "Error!",
+                                     (f"Não é possivel cadastrar um cliente sem nome."))
+                    elif fixo == "":
+                        self.show_dialog(self.dialog_window, "Error!",
+                                         (f"Não é possivel cadastrar um cliente sem celular/fixo."))
+                    elif celular == "":
+                        self.show_dialog(self.dialog_window, "Error!",
+                                         (f"Não é possivel cadastrar um cliente sem celular/fixo."))
             elif response == Gtk.ResponseType.NO:
                 pass
                 print("The cancel button was clicked")
@@ -225,6 +239,7 @@ class App(ControllerModelPycFile, ReportClients):
             self.txt_instagram.set_text(found["instagram"])
             self.txt_website.set_text(found["website"])
             self.check_pf1.set_active(found["natural_person"])
+            self.txt_localizar1.set_text(str(found["idcliente"]))
 
         #Impedindo Alteração do User Após Pesquisa
             self.txt_codigo1.set_editable(False)
@@ -254,7 +269,8 @@ class App(ControllerModelPycFile, ReportClients):
         except Exception as ex:
             self.show_dialog(self.dialog_window, "Error!",
                              (f"Não foi possivel localizar o cliente: {self.txt_localizar1.get_text()}."))
-            self.on_gtk_clear()
+            idcliente = self.txt_codigo1.get_text()
+            self.txt_localizar1.set_text(idcliente)
 
     #Botão de pesquisa ANTERIOR
     def on_tb_anterior1_clicked(self, *args):
@@ -314,7 +330,7 @@ class App(ControllerModelPycFile, ReportClients):
                     print(nome)
                     print(deleted_user)
                     self.show_dialog(self.dialog_window, "Sucess!",
-                                     (f"O Usuário {nome} foi excluído com sucesso."))
+                                     (f"O Cliente {nome} foi excluído com sucesso."))
                     self.on_gtk_clear()
                 else:
                     self.show_dialog(self.dialog_window, "Error!",
@@ -404,14 +420,14 @@ class App(ControllerModelPycFile, ReportClients):
                                          new_district, new_city, new_state, new_telephone, new_cellphone,
                                          new_errands, new_instagram, new_website, new_natural_person)
                         dialog.destroy()
-                        print(f"O Usuário {new_nome} foi alterado com sucesso.")
+                        print(f"O Cliente {new_nome} foi alterado com sucesso.")
                         print(
                             f"{new_nome}, {new_razaosocial}, {new_cnpjcpf}, {new_ie}, {new_im},{new_celular}, {new_fixo}, "
                             f"{new_recado}, {new_email}, {new_created_at},{new_inactive_since}, {new_blocked_since}, {new_cep}, "
                             f"{new_street}, {new_district}, {new_city}, {new_state}, {new_telephone}, {new_cellphone}, {new_errands},"
                             f" {new_instagram}, {new_website}, {new_natural_person}")
                         self.show_dialog(self.dialog_window, "Sucess!",
-                                         (f"O Usuário {new_nome} foi alterado com sucesso."))
+                                         (f"O Cliente {new_nome} foi alterado com sucesso."))
                         self.on_gtk_clear()
                         state = "off"
                         print("Button", "was turned", state)
