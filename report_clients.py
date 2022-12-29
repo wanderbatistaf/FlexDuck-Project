@@ -14,6 +14,7 @@ class ReportClients(object):
 
     def getidreport(self, idcliente, filename):
         save_path = "./Reports/"
+        save_windows_path = ".\\Reports\\"
         if idcliente == "":
             mydata = model.Usuarios.select().tuples()
             print("Writing to csv: {} ...".format(filename))
@@ -27,7 +28,7 @@ class ReportClients(object):
                     csvOut.writerow(row)
                     print(row)
                 if platform.system() == "Windows":
-                    os.startfile(save_path)
+                    os.startfile(save_windows_path)
                 elif platform.system() == "Darwing":
                     import subprocess
                     subprocess.call(["open", "-R", save_path])
@@ -48,7 +49,7 @@ class ReportClients(object):
                     csvOut.writerow(row)
                     print(row)
                 if platform.system() == "Windows":
-                    os.startfile(save_path)
+                    os.startfile(save_windows_path)
                 elif platform.system() == "Darwing":
                     import subprocess
                     subprocess.call(["open", "-R", save_path])

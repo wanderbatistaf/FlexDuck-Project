@@ -1,7 +1,8 @@
+import os
+
 import gi
 
 import model
-import report_clients
 from model import db
 import alert_dialogs
 
@@ -10,6 +11,7 @@ from gi.repository import Gtk
 from controller import ControllerModelPycFile
 from report_clients import ReportClients
 from datetime import date
+from pathlib import Path
 
 builder = Gtk.Builder()
 builder.add_from_file("frm_start.glade")
@@ -24,9 +26,15 @@ class App(ControllerModelPycFile, ReportClients):
         self.start_ui_clientes()
         self.cadastrado_em()
         self.create_db()
+        self.create_report_folder()
+
 
     def create_db(self, *args):
         db.create_tables([model.Usuarios])
+
+    def create_report_folder(self, *args):
+        path = Path("./Reports/")
+        path.mkdir(parents=True, exist_ok=True)
 
 
     def start_ui_clientes(self):
