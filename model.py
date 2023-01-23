@@ -32,6 +32,8 @@ class Usuarios(Model):
     instagram = CharField(max_length=256, null=False)
     website = CharField(max_length=256, null=False)
     natural_person = BooleanField(null=False)
+    inactive_status = BooleanField(null=False)
+    blocked_status = BooleanField(null=False)
 
 
 

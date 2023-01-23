@@ -37,6 +37,8 @@ class ControllerModelPycFile(object):
                 tb_flexduck_user.c.instagram,
                 tb_flexduck_user.c.website,
                 tb_flexduck_user.c.natural_person,
+                tb_flexduck_user.c.inactive_status,
+                tb_flexduck_user.c.blocked_status,
             ).where((tb_flexduck_user.c.idcliente == localizar1) |
                     (tb_flexduck_user.c.nome ** (f"%{(localizar1)}%") |
                     (tb_flexduck_user.c.razaosocial ** (f"%{(localizar1)}%") |
@@ -53,7 +55,7 @@ class ControllerModelPycFile(object):
                           'email': row[9], 'created_at': row[10], 'inactive_since': row[11], 'blocked_since': row[12],
                           'cep': row[13], 'street': row[14], 'district': row[15], 'city': row[16], 'state': row[17],
                           'telephone': row[18], 'cellphone': row[19], 'errands': row[20], 'instagram': row[21],
-                          'website': row[22], 'natural_person': row[23]})
+                          'website': row[22], 'natural_person': row[23], 'inactive_status': row[24], 'blocked_status': row[25]})
             print (rows)
         return rows[0]
 
@@ -66,7 +68,9 @@ class ControllerModelPycFile(object):
         #     print(rows)
         # return rows[0]
 
-    def insert_user(self, nome, razaosocial, cnpjcpf, ie, im, celular, fixo, recado, email, created_at, inactive_since, blocked_since, cep, street, district, city, state, telephone, cellphone, errands, instagram, website, natural_person):
+    def insert_user(self, nome, razaosocial, cnpjcpf, ie, im, celular, fixo, recado, email, created_at, inactive_since,
+                    blocked_since, cep, street, district, city, state, telephone, cellphone, errands, instagram, website,
+                    natural_person, inactive_status, blocked_status):
         query = Usuarios(
             nome=nome,
             razaosocial=razaosocial,
@@ -90,7 +94,9 @@ class ControllerModelPycFile(object):
             errands=errands,
             instagram=instagram,
             website=website,
-            natural_person=natural_person
+            natural_person=natural_person,
+            inactive_status=inactive_status,
+            blocked_status=blocked_status
         )
         query.save()
 
@@ -98,7 +104,7 @@ class ControllerModelPycFile(object):
                     new_im, new_celular, new_fixo, new_recado, new_email, new_created_at,
                     new_inactive_since, new_blocked_since, new_cep, new_street, new_district,
                     new_city, new_state, new_telephone, new_cellphone, new_errands, new_instagram,
-                    new_website, new_natural_person):
+                    new_website, new_natural_person, inactive_status, blocked_status):
         tb_flexduck_user = Table("usuarios")
 
         nrows = (tb_flexduck_user
@@ -124,7 +130,9 @@ class ControllerModelPycFile(object):
                          errands=new_errands,
                          instagram=new_instagram,
                          website=new_website,
-                         natural_person=new_natural_person
+                         natural_person=new_natural_person,
+                         inactive_status=inactive_status,
+                         blocked_status=blocked_status
                          )
                  .where(tb_flexduck_user.c.idcliente == idcliente)
                  )
